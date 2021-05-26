@@ -14,7 +14,6 @@ public class view {
         ref.launchAllWindows();
     }
 
-
     //For now this is a test method to help with testing createWindowMethods
     //note I guess can't have same id for two different views.
     public void launchAllWindows()
@@ -23,7 +22,6 @@ public class view {
         AgentID idFront = createNewAgentID("FrontView");
         AgentID idSide = createNewAgentID("SideView");
         CommandManagers windowManager = new CommandManagers();
-
 
         Latitude latitudeOrigin = new Latitude(2, 4, 1.00);
         Latitude latitudeExtent = new Latitude(2, 4, 1.00);
@@ -40,9 +38,6 @@ public class view {
         buildTopView(idTop, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, longitudeOrigin, longitudeExtent, longitudeInterval);
         buildFrontView(idFront, windowManager, longitudeOrigin, longitudeExtent, longitudeInterval, altitudeOrigin, altitudeExtent, altitudeAGLInterval, altitudeBGLInterval);
         buildSideView(idSide, windowManager, latitudeOrigin, latitudeExtent, latitudeInterval, altitudeOrigin, altitudeExtent,altitudeAGLInterval, altitudeBGLInterval);
-
-        deleteWindow(idTop, "FrontView", windowManager);
-
     }
 
     public void buildTopView(AgentID idWindow, CommandManagers windowManager, Latitude latitudeOrigin, Latitude latitudeExtent, Latitude latitudeInterval,
@@ -115,9 +110,12 @@ public class view {
         return new AgentID(id);
     }
 
+    //deletes a window
+    //I'm assuming the text passed in will display something to the console.
     public void deleteWindow(AgentID windowId, String text, CommandManagers windowManager)
     {
         CommandViewDeleteWindow deleteWindow = new CommandViewDeleteWindow(windowManager, text, windowId);
+        deleteWindow.execute();
     }
 
     public void unlockWindow(AgentID windowId, String text, CommandManagers windowManager)
