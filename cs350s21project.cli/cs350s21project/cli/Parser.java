@@ -3,6 +3,7 @@ import cs350s21project.controller.CommandManagers;
 import cs350s21project.datatype.AgentID;
 import cs350s21project.datatype.Latitude;
 import cs350s21project.datatype.Longitude;
+import cs350s21project.datatype.Time;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -27,7 +28,7 @@ public class Parser {
     private int altitude; // TODO: datatype will be Altitude 1000
 
     // Munitions Variables
-    private double time;// TODO: datatype will be Time 10.8
+    private Time time;
     private double distance; // TODO: datatype will be DistanceNauticalMiles 25.3
     private double azimuth; // TODO: datatype will be AttitudeYaw 10
     private double elevation; // TODO: datatype will be AttitudePitch 25
@@ -79,10 +80,10 @@ public class Parser {
                 miscellaneous();
             }
         }
-        else if (this.words.length >= 3) {
+        if (this.words.length >= 3) {
             views();
         }
-        else if (this.words.length >= 4) {
+        if (this.words.length >= 4) {
             actors();
             munitions();
             sensorsFuzes();
@@ -231,7 +232,7 @@ public class Parser {
                     this.id = this.words[3];
                     this.id2 = this.words[6];
                     this.id3 = this.words[8];
-                    this.time = Double.parseDouble(this.words[11]);
+                    // TODO: this.time = Double.parseDouble(this.words[11]);
                     System.out.println("Use CommandMunitionDefineTorpedo");
                     System.out.println("Variables: ID: " + this.id + " ID2: " + this.id2 + " ID3: " +
                             this.id3 + " Time: " + this.time);
@@ -332,7 +333,7 @@ public class Parser {
                 case "time":
                     // define sensor time id with trigger time time
                     this.id = this.words[3];
-                    this.time = Double.parseDouble(this.words[7]);
+                    // TODO: this.time = Double.parseDouble(this.words[7]);
                     System.out.println("Use CommandSensorDefineTime");
                     System.out.println("Variables: ID: " + this.id + " Time: " + this.time);
                     // TODO: Use CommandSensorDefineTime
@@ -367,48 +368,51 @@ public class Parser {
                 case "@load":
                     // @load filename
                     this.fileName = this.words[1];
-                    System.out.println("Use CommandMiscLoad");
-                    System.out.println("Variables: Filename: " + this.fileName);
-                    // TODO: Use CommandMiscLoad
+                    Misc myMiscLoad = new Misc();
+                    myMiscLoad.load(universalWindowManager, this.userInput, this.fileName);
                     break;
                 case "@pause":
                     // @pause
-                    System.out.println("Use CommandMiscPause");
-                    // TODO: Use CommandMiscPause
+                    Misc myMiscPause = new Misc();
+                    myMiscPause.pause(universalWindowManager, this.userInput);
                     break;
                 case "@resume":
                     // @resume
-                    System.out.println("Use CommandMiscResume");
-                    // TODO: Use CommandMiscResume
+                    Misc myMiscResume = new Misc();
+                    myMiscResume.resume(universalWindowManager, this.userInput);
                     break;
                 case "@set":
                     // @set update time
-                    this.time = Double.parseDouble(this.words[2]);
-                    System.out.println("Use CommandMiscSetUpdate");
-                    System.out.println("Variables: Time: " + this.time);
-                    // TODO: Use CommandMiscSetUpdate
+                    double secondsSet = Double.parseDouble(this.words[2]);
+                    Time myTimeSet = new Time(secondsSet);
+                    Misc myMiscSet = new Misc();
+                    myMiscSet.setUpdateTime(universalWindowManager, this.userInput, myTimeSet);
                     break;
                 case "@wait":
                     // @wait time
-                    this.time = Double.parseDouble(this.words[1]);
-                    System.out.println("Use CommandMiscWait");
-                    // TODO: Use CommandMiscWait
+                    double secondsWait = Double.parseDouble(this.words[1]);
+                    Time myTimeWait = new Time(secondsWait);
+                    Misc myMiscWait = new Misc();
+                    myMiscWait.setUpdateTime(universalWindowManager, this.userInput, myTimeWait);
                     break;
                 case "@force":
                     // @force id state to coordinates with course course speed speed
                     this.id = this.words[1];
+
                     this.coordinates = Integer.parseInt(this.words[4]);
-                    this.course = Integer.parseInt(this.words[7]);
-                    this.speed = Integer.parseInt(this.words[9]);
+                    this.course = Integer.parseInt(this.words[13]);
+                    this.speed = Integer.parseInt(this.words[15]);
                     System.out.println("Use CommandActorSetState");
                     System.out.println("Variables: ID: " + this.id + " Coordinates: " +
                             this.coordinates + " Course: " + this.course + " Speed: " + this.speed);
                     // TODO: Use CommandActorSetState.
+                    Misc myMiscForce = new Misc();
+                    //TODO: myMiscForce.force(universalWindowManager, this.userInput, new AgentID(this.id), this.coordinates, this.course, this.speed);
                     break;
                 case "@exit":
                     // @exit
-                    System.out.println("Use CommandMiscExit");
-                    // TODO: Use CommandMiscExit
+                    Misc myMiscExit= new Misc();
+                    myMiscExit.exit(universalWindowManager, this.userInput);
                     break;
             }
         }
