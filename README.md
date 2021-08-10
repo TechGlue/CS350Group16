@@ -1,7 +1,7 @@
 # Group 16 Contributing Guide
 
 1. **Never work from the master branch.** The master branch will be reserved for our deployable product. When adding a new feature please create a **new branch**. Branch names should always have some type of meaning.
-    - Always name branches using the following template initials-method worked on. EX. lg-deltewindow.
+    - Always name branches using the following template initials-method worked on. EX. lg-deletewindow.
     
 2. I'll (Luis) be in charge of reviewing the pull requests and merging them to the main branch. You are allowed to make the commits freely. But, **please try to avoid committing anything to the main branch before running it by the team.**
 
